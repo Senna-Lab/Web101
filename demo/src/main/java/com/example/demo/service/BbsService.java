@@ -18,7 +18,7 @@ public class BbsService {
 	@Autowired
 	private BbsRepository repository;
 	
-	public BbsEntity testBbsService() {
+	public void testBbsService() {
 		BbsEntity entity = BbsEntity.builder()
 				.bbsTitle("제목입니다..")
 				.bbsBody("게시판 내용물입니다.")
@@ -27,9 +27,14 @@ public class BbsService {
 				.dateTimeField(new Timestamp(System.currentTimeMillis()))
 				.build();
 		
+		repository.save(entity);
 		
+	}
+	
+	public List<BbsEntity> findAll(){
 		
-		return entity;
+		return repository.findAll();
+		
 	}
 	
 	public List<BbsEntity> retrieve(final String userId) {

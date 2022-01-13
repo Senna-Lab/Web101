@@ -23,6 +23,19 @@ public class BbsDTO {
 	private int thumbsDown;
 	private java.sql.Timestamp dateTimeField;
 	
+	public BbsDTO(final BbsEntity bbsEntity) {
+		
+		this.id = bbsEntity.getId();
+		this.userId = bbsEntity.getUserId();
+		this.bbsTitle = bbsEntity.getBbsTitle();
+		this.bbsBody = bbsEntity.getBbsBody();
+		this.thumbsUp = bbsEntity.getThumbsUp();
+		this.thumbsDown = bbsEntity.getThumbsDown();
+		this.dateTimeField = bbsEntity.getDateTimeField();
+		
+	}
+	
+	
 	public BbsEntity toEntity(final BbsDTO dto) {
 		
 		return BbsEntity.builder()

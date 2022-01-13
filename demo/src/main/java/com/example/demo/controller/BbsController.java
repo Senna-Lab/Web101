@@ -24,12 +24,12 @@ public class BbsController {
 	@GetMapping
 	public ResponseEntity<?> testBbs( final String userId){
 		
-		List<BbsEntity> entities = bbsService.retrieve(userId);
-		entities.add(bbsService.testBbsService());
+		bbsService.testBbsService();
+		List<BbsEntity> entities = bbsService.findAll();
 		
-		//List<BbsDTO> dtos = entities.stream().map(BbsDTO::new).collect(Collectors.toList());
+		List<BbsDTO> dtos = entities.stream().map(BbsDTO::new).collect(Collectors.toList());
 
-		ResponseDTO<BbsEntity> response = ResponseDTO.<BbsEntity>builder().data(entities).build();
+		ResponseDTO<BbsDTO> response = ResponseDTO.<BbsDTO>builder().data(dtos).build();
 		
 		return ResponseEntity.ok().body(response);
 	}
