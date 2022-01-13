@@ -34,6 +34,7 @@ public class BbsEntity {
 		
 		@Id
 		@GeneratedValue(generator="BBS_SEQ_GEN", strategy=GenerationType.SEQUENCE)
+		@Column(precision=4, scale=0)
 		private Long id;
 		
 		private String userId;
