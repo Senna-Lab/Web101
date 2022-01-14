@@ -43,4 +43,11 @@ public class BbsService {
 		
 		return repository.findByUserId(userId);
 	}
+	
+	public List<BbsEntity> create(BbsEntity entity) {
+		
+		repository.save(entity);
+		
+		return repository.findAll();
+	}
 }
