@@ -30,4 +30,10 @@ public class thymeController {
 		model.addAttribute("bbsDto", dtos);
 		return "content/home";
 	}
+	
+	@RequestMapping(value="/test0118", method=RequestMethod.GET)
+	public String test0118(Model model) {
+		
+		return "test/0118";
+	}
 }
