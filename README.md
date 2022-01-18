@@ -1,2 +1,2 @@
 # Web101
-Spring boot + React 
+Spring boot studying project..!
