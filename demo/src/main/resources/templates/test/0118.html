@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8
+\
+">
+<title>Insert title here</title>
+</head>
+
+<link rel="stylesheet" href="kendoui/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="kendoui/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="kendoui/styles/kendo.default.mobile.min.css" />
+
+    <script src="kendoui/js/jquery.min.js"></script>
+    
+    
+    <script src="kendoui/js/kendo.all.min.js"></script>
+
+
+
+<body>
+	<div id="example">
+	    <div id="grid">
+	    </div>
+	    
+	     <h4>Jikchk:</h4>
+        <input id="jikchk" style="width: 50%" />
+        
+        <h4>Jikgubk:</h4>
+        <input id="jikgub" style="width: 50%" />
+        
+        
+        <h4>Datepicker</h4>
+        <input id="datepicker" value="2022-01-18" title="datepicker" style="width: 50%" />
+	    
+    </div>
+</body>
+
+<script charset="UTF-8">
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+            	toolbar:["save"],
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "http://localhost:8080/api"
+                    },
+                    pageSize: 50,
+                    serverPaging: {
+                    	page:1,
+                    	pageSize:50
+                    },
+                    schema:{
+                        model: {
+                         id: "emp_cd",
+                         fields: {
+                           emp_nm: { type: "string"},
+                           perno: { type: "string"},
+                           jikgub: { type: "string"},
+                           jikchk: { type: "string"},
+                           telno: { type: "string"},
+                           hpno: { type: "string"},
+                         }
+                        }
+                       }
+                },
+                height: 800,
+                groupable: true,
+                sortable: true,
+                pageable: true,
+                editable: "popup", // not working. need to define how to update Data through CRUD API
+                columns: [
+                	 {
+                         title: "#",
+                         template: "#= ++record #",
+                         width: 50
+                       }, 
+                {
+                    field: "emp_cd",
+                    title: "Code"
+                }, {
+                    field: "emp_nm",
+                    title: "Name"
+                }, {
+                    field: "perno",
+                    title: "Personal Number"
+                }, {
+                    field: "jikgub",
+                    title: "Jikgub"
+                }, {
+                    field: "jikchk",
+                    title: "Jikchk"
+                }, {
+                    field: "telno",
+                    title: "tel"
+                }, {
+                    field: "hpno",
+                    title: "H.P"
+                }
+                ],
+                dataBinding: function() {
+                    record = (this.dataSource.page() -1) * this.dataSource.pageSize();
+                  }
+            });
+            
+            var jikchk = $("#jikchk").kendoDropDownList({
+                optionLabel: "Select jikchk...",
+                height: 800,
+                dataSource: {
+                	type:"json",
+                     transport: {
+                         read: "http://localhost:8080/api/jikchk",
+                         type: "GET",
+                         dataType: "json",
+                         contentType: "application/json; charset=utf-8"
+                     }
+                },
+                dataTextField : "value",
+                dataValueField : "value"
+            });
+            
+            var jikgub = $("#jikgub").kendoDropDownList({
+                optionLabel: "Select jikgub...",
+                height: 800,
+                dataSource: {
+                	type:"json",
+                     transport: {
+                         read: "http://localhost:8080/api/jikgub",
+                         type: "GET",
+                         dataType: "json",
+                         contentType: "application/json; charset=utf-8"
+                     }
+                },
+                dataTextField : "value",
+                dataValueField : "value"
+            });
+            
+            $("#datepicker").kendoDatePicker({
+                // defines the start view
+                start: "year",
+
+                // defines when the calendar should return date
+                depth: "month",
+
+                // display month and year in the input
+                format: "yyyy-MM-dd",
+
+                // specifies that DateInput is used for masking the input element
+                dateInput: true
+            });
+            
+        });
+    </script>
+
+<script>
+
+</script>
+</html>

@@ -5,7 +5,6 @@ import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -24,16 +23,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="tbin_empmst")
-public class EmpEntity {
+/*
+@NamedNativeQuery(name="Emp.findJikchk",
+	query="select 'jikchk' as 'key', a.value\\r\\n\" + \r\n" + 
+			"			\"	from (select distinct jikchk value\\r\\n\" + \r\n" + 
+			"			\"		from tbin_empmst\\r\\n\" + \r\n" + 
+			"			\"		where jikchk != '' and jikchk is not null) a",
+	resultSetMapping="Mapping.BaseDTO")
+@SqlResultSetMapping(name="Mappping.BaseDTO",
+	classes= @ConstructorResult(targetClass = BaseDTO.class,
+								columns= {
+										@ColumnResult(name="key"),
+										@ColumnResult(name="value")
+								}))
+								*/
+public class baseEntity {
+
+
+	private String key;
 	
 	@Id
-	private String emp_cd;
-	private String emp_nm;
-	private String perno;
-	private String jikgub;
-	private String jikchk;
-	private String telno;
-	private String hpno;
-	
+	private String value;
+
+
 }

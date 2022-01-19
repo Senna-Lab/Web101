@@ -1,8 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.EmpEntity;
-import com.example.demo.model.TodoEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class JikDTO {
+public class BaseDTO {
 	
 
-	private String jikgub;
-	private String jikchk;
+	private String key;
+	private String value;
+	
+	
 }

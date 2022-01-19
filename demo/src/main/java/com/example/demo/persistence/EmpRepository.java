@@ -2,9 +2,13 @@ package com.example.demo.persistence;
 
 import java.util.List;
 
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.example.demo.dto.BaseDTO;
 import com.example.demo.model.EmpEntity;
 
 
@@ -24,5 +28,6 @@ public interface EmpRepository extends JpaRepository<EmpEntity, String>{
 			"		where jikgub != '' and jikgub is not null")
 	List<String> findJikgub();
 	
+
 		
 }

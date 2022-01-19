@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.example.demo.model.EmpEntity;
-import com.example.demo.model.TodoEntity;
 import com.example.demo.persistence.EmpRepository;
-import com.example.demo.persistence.TodoRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +28,7 @@ public class EmpService {
 		public List<String> findJikchk(){
 			return repository.findJikchk();
 		}
-		
+
 		public List<String> findJikgub(){
 			return repository.findJikgub();
 		}
