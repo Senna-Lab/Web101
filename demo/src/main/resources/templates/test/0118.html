@@ -15,7 +15,8 @@
     
     
     <script src="kendoui/js/kendo.all.min.js"></script>
-
+<!--     <script src="js/common/genexon.js"></script>
+ -->
 
 
 <body>
@@ -39,36 +40,85 @@
 <script charset="UTF-8">
         $(document).ready(function () {
             $("#grid").kendoGrid({
-            	toolbar:["save"],
+            	toolbar:["create"],
                 dataSource: {
                     type: "json",
                     transport: {
-                        read: "http://localhost:8080/api"
+                    	read: {
+                            url: "http://localhost:3333/api",
+                            type: "get",
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8"
+                        },
+                        create: {
+                            url: "http://localhost:3333/api",
+                            type: "post",
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8"
+                        },
+                        update: {
+                            url: "http://localhost:3333/api",
+                            type: "put",
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8"
+                        },
+                        destroy: {
+                            url: "http://localhost:3333/api",
+                            type: "delete",
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8"
+                        },
+                        parameterMap: function (options, operation) {
+                        	
+                        	
+                        	if(operation !== "read"){
+                        		
+                        		//mb_id는 필수 값임
+                        		if(operation === "create"){
+                        			options.mb_id = "HSH"
+                        		}
+                        		
+                        		console.log(options);
+                        		return JSON.stringify(options);
+                        	}
+                           /*  if (operation !== "read" && options.models) {
+                            	console.log(options.model);
+                                return kendo.stringify(options);
+                            }; */
+                        }
                     },
-                    pageSize: 50,
+                    pageSize: 20,
                     serverPaging: {
                     	page:1,
                     	pageSize:50
                     },
                     schema:{
-                        model: {
-                         id: "emp_cd",
-                         fields: {
-                           emp_nm: { type: "string"},
-                           perno: { type: "string"},
-                           jikgub: { type: "string"},
-                           jikchk: { type: "string"},
-                           telno: { type: "string"},
-                           hpno: { type: "string"},
-                         }
+                    		model: {
+                    			id: "emp_cd",
+                    			field: {
+                    		        emp_cd: { type: "String", editable: false, },
+                    		        emp_nm:  { type: "String", validation: { required: true } },
+                    		        perno:  { type: "String", validation: { required: true }},
+                    		        jikgub: { type: "String", validation: { required: true }},
+                    		        jikchk: { type: "String", validation: { required: true }},
+                    		        telno: { type: "String", validation: { required: true }},
+                    		        hpno: { type: "String", validation: { required: true }},
+                    		        mb_id: { type: "String", validation: { required: true }},
+                    		    }
+                    		},
+                            //data: "items"
                         }
-                       }
                 },
+                error: function (e) {
+                    // Handle error.
+                    alert("Status: " + e.status + "; Error message: " + e.errorThrown);
+                },
+                batch: false,
                 height: 800,
                 groupable: true,
                 sortable: true,
                 pageable: true,
-                editable: "popup", // not working. need to define how to update Data through CRUD API
+                editable: "inline", // not working. need to define how to update Data through CRUD API
                 columns: [
                 	 {
                          title: "#",
@@ -96,7 +146,8 @@
                 }, {
                     field: "hpno",
                     title: "H.P"
-                }
+                },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "170px" },
                 ],
                 dataBinding: function() {
                     record = (this.dataSource.page() -1) * this.dataSource.pageSize();
@@ -109,7 +160,7 @@
                 dataSource: {
                 	type:"json",
                      transport: {
-                         read: "http://localhost:8080/api/jikchk",
+                         read: "http://localhost:3333/api/jikchk",
                          type: "GET",
                          dataType: "json",
                          contentType: "application/json; charset=utf-8"
@@ -125,7 +176,7 @@
                 dataSource: {
                 	type:"json",
                      transport: {
-                         read: "http://localhost:8080/api/jikgub",
+                         read: "http://localhost:3333/api/jikgub",
                          type: "GET",
                          dataType: "json",
                          contentType: "application/json; charset=utf-8"

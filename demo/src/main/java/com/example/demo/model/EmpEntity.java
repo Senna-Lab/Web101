@@ -35,5 +35,22 @@ public class EmpEntity {
 	private String jikchk;
 	private String telno;
 	private String hpno;
+	private String mb_id;
+	
+	
+	public EmpEntity(String emp_cd, String emp_nm, String perno, String jikgub, String jikchk, String telno,
+			String hpno) {
+		super();
+		this.emp_cd = emp_cd;
+		this.emp_nm = emp_nm;
+		this.perno = perno;
+		this.jikgub = jikgub;
+		this.jikchk = jikchk;
+		this.telno = telno;
+		this.hpno = hpno;
+		this.mb_id="HSH";
+	}
+	
+	
 	
 }

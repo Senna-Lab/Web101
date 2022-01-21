@@ -21,6 +21,7 @@ public class EmpDTO {
 	private String jikchk;
 	private String telno;
 	private String hpno;
+	private String mb_id;
 	
 	public EmpDTO(final EmpEntity entity) {
 		this.emp_cd = entity.getEmp_cd();
@@ -28,8 +29,9 @@ public class EmpDTO {
 		this.perno = entity.getPerno();
 		this.jikgub = entity.getJikgub();
 		this.jikchk = entity.getJikchk();
-		this.telno = entity.getJikchk();
+		this.telno = entity.getTelno();
 		this.hpno = entity.getHpno();
+		this.mb_id = entity.getMb_id();
 	}
 	
 	// Controller는 DTO로 요청바디를 받는다. 
@@ -44,6 +46,7 @@ public class EmpDTO {
 				.jikgub(dto.getJikgub())
 				.telno(dto.getTelno())
 				.hpno(dto.getHpno())
+				.mb_id(dto.getMb_id())
 				.build();
 	}
 }

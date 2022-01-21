@@ -2,12 +2,17 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,9 +47,88 @@ public class EmpController {
 		
 		return ResponseEntity.ok().body(dtos);
 	}
-
-	@GetMapping("/jikchk")
-	public ResponseEntity<?> getJikchk(){
+	
+	
+	
+	
+	@PostMapping
+	public ResponseEntity<?> createEmp(@RequestBody EmpDTO dto){
+		
+		try {
+			EmpEntity entity = dto.toEntity(dto);
+			
+			//서비스에서 EmpEntity 생성
+			//List<EmpEntity> entities = service.createEmpInfo(entity);
+			EmpEntity entity2 = service.createEmpInfo(entity);
+			
+			//List<EmpDTO> dtos = entities.stream().map(EmpDTO::new).collect(Collectors.toList());
+			//ResponseDTO<EmpDTO> response = ResponseDTO.<EmpDTO>builder().data(dtos).build();
+			
+			return ResponseEntity.ok().body(entity2);
+		} catch (Exception e) {
+			String error = e.getMessage();
+			ResponseDTO<EmpDTO> response = ResponseDTO.<EmpDTO>builder().error(error).build();
+			
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> updateEmp(@RequestBody EmpDTO dto){
+		
+		
+		
+		System.out.println(dto);
+		
+		
+		EmpEntity entity = dto.toEntity(dto);
+	
+		//List<EmpEntity> entities = service.updateEmpInfo(entity);
+		EmpEntity entity2 = service.updateEmpInfo(entity);
+		
+		//List<EmpDTO> dtos = entities.stream().map(EmpDTO::new).collect(Collectors.toList());
+		//ResponseDTO<EmpDTO> response = ResponseDTO.<EmpDTO>builder().data(dtos).build();
+		
+		return ResponseEntity.ok().body(entity2);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> deleteEmp(@RequestBody EmpDTO dto){
+		
+		try {
+			EmpEntity entity = dto.toEntity(dto);
+			
+			//서비스에서 EmpEntity 생성
+			List<EmpEntity> entities = service.deleteEmpInfo(entity);
+			
+			List<EmpDTO> dtos = entities.stream().map(EmpDTO::new).collect(Collectors.toList());
+			ResponseDTO<EmpDTO> response = ResponseDTO.<EmpDTO>builder().data(dtos).build();
+			
+			return ResponseEntity.ok().body(response);
+		} catch (Exception e) {
+			String error = e.getMessage();
+			ResponseDTO<EmpDTO> response = ResponseDTO.<EmpDTO>builder().error(error).build();
+			
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	//-----------------------
+	
+/*
+	@GetMapping("/jikchk2")
+	public ResponseEntity<?> getJikchk2(){
 		
 		//DB에서 jikchk 가져오기
 		List<String> jikchkList = service.findJikchk();
@@ -52,41 +136,34 @@ public class EmpController {
 		List<BaseDTO> jikchkJsonList = new ArrayList<BaseDTO>();
 		
 		
-		//jikgub 값을 json에 넣기. key를 "jikgub"으로 고정 ==> {"key":"jikgub", "value":"어쩌구"}, ....
+		//jikchk 값을 json에 넣기. key를 "jikchk"으로 고정 ==> {"key":"jikchk", "value":"어쩌구"}, ....
 				for(String s : jikchkList) {
 					jikchkJsonList.add(new BaseDTO("jikchk", s));
 				}
 		
 		return ResponseEntity.ok().body(jikchkJsonList);
 	}
+	*/
+	
+	@GetMapping("/jikchk")
+	public ResponseEntity<?> getJikchk(){
+		
+		//DB에서 jikchk 가져오기
+		List<BaseDTO> jikchkList = service.findJikchk();
+		
+		
+		return ResponseEntity.ok().body(jikchkList);
+	}
 
 	@GetMapping("/jikgub")
 	public ResponseEntity<?> getJikgub(){
 		
 		//DB에서 jikgub 가져오기
-		List<String> jikgubList = service.findJikgub();
-		
-		
-
-		List<BaseDTO> jikgubJsonList = new ArrayList<BaseDTO>();
-
-		//jikgub 값을 json에 넣기. key를 "jikgub"으로 고정 ==> {"key":"jikgub", "value":"어쩌구"}, ....
-		for(String s : jikgubList) {
-			jikgubJsonList.add(new BaseDTO("jikgub", s));
-		}
-
+		List<BaseDTO> jikgubList = service.findJikgub();
 
 		
-		return ResponseEntity.ok().body(jikgubJsonList);
+		return ResponseEntity.ok().body(jikgubList);
 	}
 	
-	@GetMapping("/jikgub2")
-	public ResponseEntity<?> getJikgub2(){
-		
-		
-		String tmp = "[{\"key\":\"jikgub\",\"value\":\"고문\"},{\"key\":\"jikgub\",\"value\":\"FC\"},{\"key\":\"jikgub\",\"value\":\"전무\"},{\"key\":\"jikgub\",\"value\":\"대리\"},{\"key\":\"jikgub\",\"value\":\"과장\"},{\"key\":\"jikgub\",\"value\":\"사원\"},{\"key\":\"jikgub\",\"value\":\"본부장\"},{\"key\":\"jikgub\",\"value\":\"주임\"},{\"key\":\"jikgub\",\"value\":\"부사장\"},{\"key\":\"jikgub\",\"value\":\"부장\"},{\"key\":\"jikgub\",\"value\":\"상무\"},{\"key\":\"jikgub\",\"value\":\"차장\"},{\"key\":\"jikgub\",\"value\":\"대표\"},";
-		
-		return ResponseEntity.ok().body(tmp);
-	}
 
 }

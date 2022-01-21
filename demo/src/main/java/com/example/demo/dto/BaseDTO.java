@@ -16,4 +16,5 @@ public class BaseDTO {
 	private String value;
 	
 	
+	
 }
